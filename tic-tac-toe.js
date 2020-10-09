@@ -1,7 +1,9 @@
 //global variables 
 
 var state = [];
-
+var dict = {0:"",1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:""};
+var game_state = ["","","","","","","","",];
+var click_count = 0;
 
 window.onload = () => { 
     // code that will run when the page is loaded
@@ -11,14 +13,14 @@ window.onload = () => {
     for(i=0;i<no_of_pieces;i++){
         board_pieces[i].setAttribute("id",i); //assign a index id to each element
         board_pieces[i].setAttribute("class","square"); //assign the sqare class to each element
-        movingMouse(board_pieces[i]);
+        movingMouse(board_pieces[i],i);
     }
 
 }
 
 
-movingMouse = (item) =>{
-
+movingMouse = (item,index) =>{
+    var id = index;
     // Mouse hover listener
     item.onmouseover = function(){
         item.classList.add("hover");
@@ -34,13 +36,16 @@ movingMouse = (item) =>{
             item.classList.add("X");
             item.innerHTML = "X";
             state.push("X");
+            game_state[id] = "X";
             cancel(item);
+            
         }
         // Click for O
         else if (state[state.length-1] == "X") {
             item.classList.add("O");
             item.innerHTML = "O";
             state.push("O");
+            game_state[id] = "O";
             cancel(item);
           
             // Click for X
@@ -48,25 +53,90 @@ movingMouse = (item) =>{
             item.classList.add("X");
             item.innerHTML = "X";
             state.push("X");
+            game_state[id] = "X";
             cancel(item);
         }
-    }    
-
-
+        click_count++;
+        console.log(game_state);
+        winner(); 
+    } 
+    
+    
 }
 
+// Stop player from selecting a square twice and changing value
+cancel = (item)=>{ item.onclick = function(){}}
 
-cancel = (item)=>{
-    var comments = [];
-    var click_count = 0;
-    item.onclick = function(){
-        alert("Yuh too thief man !!");
+// check for 3 in a row
+winner = () =>{
+    //checks clicks by 3s for X
+    if(game_state[0]== "X" && game_state[1]== "X" && game_state[2] == "X"){
+       congatsMessage("X");
+    }
+    else if(game_state[3]== "X" && game_state[4]== "X" && game_state[5] == "X"){
+        congatsMessage("X");
+     }
+     else if(game_state[6]== "X" && game_state[7]== "X" && game_state[8] == "X"){
+        congatsMessage("X");
+     }
+     else if(game_state[0]== "X" && game_state[3]== "X" && game_state[6] == "X"){
+       congatsMessage("X");
+    }
+    else if(game_state[1]== "X" && game_state[4]== "X" && game_state[7] == "X"){
+        congatsMessage("X");
+     }
+    else if(game_state[2]== "X" && game_state[5]== "X" && game_state[8] == "X"){
+        congatsMessage("X");
+     }
+    else if(game_state[2]== "X" && game_state[4]== "X" && game_state[6] == "X"){
+        congatsMessage("X");
+     }
+     else if(game_state[0]== "X" && game_state[4]== "X" && game_state[8] == "X"){
+        congatsMessage("X");
+     }
+     //checks clicks by 3s for X
+     if(game_state[0]== "O" && game_state[1]== "O" && game_state[2] == "O"){
+        congatsMessage("O");
+     }
+     else if(game_state[3]== "O" && game_state[4]== "O" && game_state[5] == "O"){
+         congatsMessage("O");
+      }
+      else if(game_state[6]== "O" && game_state[7]== "O" && game_state[8] == "O"){
+         congatsMessage("O");
+      }
+      else if(game_state[0]== "O" && game_state[3]== "O" && game_state[6] == "O"){
+        congatsMessage("O");
+     }
+     else if(game_state[1]== "O" && game_state[4]== "O" && game_state[7] == "O"){
+         congatsMessage("O");
+      }
+     else if(game_state[2]== "O" && game_state[5]== "O" && game_state[8] == "O"){
+         congatsMessage("O");
+      }
+     else if(game_state[2]== "O" && game_state[4]== "O" && game_state[6] == "O"){
+         congatsMessage("O");
+      }
+      else if(game_state[0]== "O" && game_state[4]== "O" && game_state[8] == "O"){
+         congatsMessage("O");
+      }
+    
+}
+// display winner message
+congatsMessage =(el) =>{
+    // status id for message board
+    var message = document.getElementById("status");
+
+    if (el == "X"){
+           
+            message.innerHTML = "Congratulations! X is the Winner!";
+            message.className = "you-won";
+    }
+    else if (el == "O"){
+
+            message.innerHTML = "Congratulations! O is the Winner!";
+            message.className = "you-won";
     }
 }
-
-
-
-
 
 
 
