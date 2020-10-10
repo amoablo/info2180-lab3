@@ -5,7 +5,9 @@ var dict = {0:"",1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:""};
 var game_state = ["","","","","","","","",];
 var click_count = 0;
 
+
 window.onload = () => { 
+   // ending();
     // code that will run when the page is loaded
     var board_pieces = document.getElementById("board").querySelectorAll("div"); //get all the divs inside the board div
     var no_of_pieces = document.getElementById("board").children.length;
@@ -20,8 +22,10 @@ window.onload = () => {
 
 
 movingMouse = (item,index) =>{
+
     var id = index;
     // Mouse hover listener
+    
     item.onmouseover = function(){
         item.classList.add("hover");
     }
@@ -61,7 +65,10 @@ movingMouse = (item,index) =>{
         winner(); 
     } 
     
-    
+    var buttton = document.getElementsByClassName("btn")[0];// new game button
+    buttton.onclick = function(){
+        document.location.reload();// restarts the game by reloading the page and calling the onload function
+    }
 }
 
 // Stop player from selecting a square twice and changing value
@@ -127,16 +134,14 @@ congatsMessage =(el) =>{
     var message = document.getElementById("status");
 
     if (el == "X"){
-           
+            // winner message for X
             message.innerHTML = "Congratulations! X is the Winner!";
             message.className = "you-won";
     }
     else if (el == "O"){
-
+            // winner message for X
             message.innerHTML = "Congratulations! O is the Winner!";
             message.className = "you-won";
     }
 }
-
-
 
